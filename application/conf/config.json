@@ -15,8 +15,14 @@
 				"config": {
 					"host": "0.0.0.0",
 					"port": 9870,
-					"inboundPermitted": [],
-					"outboundPermitted": []
+					"inboundPermitted": [
+						"request-latest",
+						"request-time-series",
+						"request-keys"
+					],
+					"outboundPermitted": [
+						"imu-data"
+					]
 				}
 			},
 			{
