@@ -9,12 +9,6 @@
 				"config": {}
 			},
 			{
-				"name": "Random Position Publisher",
-				"verticle": "de.wuespace.telestion.example.RandomPositionPublisher",
-				"magnitude": 1,
-				"config": {}
-			},
-			{
 				"name": "Eventbus Tcp Bridge",
 				"verticle": "de.wuespace.telestion.services.connection.EventbusTcpBridge",
 				"magnitude": 1,
@@ -23,6 +17,40 @@
 					"port": 9870,
 					"inboundPermitted": [],
 					"outboundPermitted": []
+				}
+			},
+			{
+				"name": "TCP Receiver",
+				"verticle": "de.wuespace.telestion.project.workshop1.TCPReceiver",
+				"magnitude": 1,
+				"config": {
+					"outAddress": "imu-data",
+					"host": "jupiter.testsignalaw.de",
+					"port": 33987
+				}
+			},
+			{
+				"name": "Redis Saver",
+				"verticle": "de.wuespace.telestion.project.workshop1.redis.RedisSaver",
+				"magnitude": 1,
+				"config": {
+					"connectionString": "redis://localhost:6379",
+					"reconnectAttempts": 10,
+					"inAddresses": [
+						"imu-data"
+					]
+				}
+			},
+			{
+				"name": "[DATA] Redis Request Handler",
+				"verticle": "de.wuespace.telestion.project.workshop1.redis.RedisRequestHandler",
+				"magnitude": 4,
+				"config": {
+					"connectionString": "redis://localhost:6379",
+					"reconnectAttempts": 10,
+					"requestLatestAddress": "request-latest",
+					"requestTimeSeriesAddress": "request-time-series",
+					"requestKeysAddress": "request-keys"
 				}
 			}
 		]
